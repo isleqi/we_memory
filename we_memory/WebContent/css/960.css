@@ -1,0 +1,20 @@
+
+.container_24 {
+	margin-left: auto;
+	margin-right: auto;
+	width: 960px;
+}
+
+
+.grid_8,
+ {
+	display:inline;
+	float: left;
+	position: relative;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.container_24 .grid_8 {
+	width:300px;
+}
