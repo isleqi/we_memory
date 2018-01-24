@@ -25,9 +25,10 @@
 {position: absolute;
 margin-left: 825px;
 top: 110px;
-width: 180px;}
+width: 180px;z-index: 2000000}
 }
 #scroll{}
+#sea{z-index: 2000000}
 </style>
 <script>
 //<![CDATA[
@@ -114,10 +115,12 @@ out.write(day+"days");
            <a id="time">time</a>
 
       </li>
+      <a id="upload"  href="upload">upload</a>
       <a id="search">Search</a>
  <form action="searchphoto">
  <input id="sea" name="search" value="search for description..."  size="32"   type="text" onclick="this.value=''"/>
  </form>
+ 
       </ul>
  
   </div>
