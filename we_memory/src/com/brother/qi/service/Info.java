@@ -12,17 +12,49 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.brother.qi.dao.Photo_info_dao;
+import com.brother.qi.model.Photo_info;
 
 
 @Service
-public class Info {
-	 
-	String root=System.getProperty("root");
+public class Info {           
+	
+	
 	public void addinfo_(String name,String value) throws FileNotFoundException {
-		System.out.println(root);
-
-		Map<String, String> info=this.loadinfo();
+	
+		
+		
+		Photo_info_dao p=(Photo_info_dao)Hibernate_init.cf.getBean("photo");
+		
+		
+		Photo_info photo=p.load(Photo_info.class,name);
+		String info_before="";
+		if(photo.getdescription()!=null)
+		info_before=photo.getdescription();
+		String add_info[]=value.split(" ");
+		StringBuffer temp=new StringBuffer("");
+		
+		if(info_before!="")
+			temp.append("&");
+		
+		for(int i=0;i<add_info.length;i++) {
+		 System.out.println(add_info[i]);
+			temp.append(add_info[i]);
+			if(i!=add_info.length-1)
+				temp.append("&");
+		}
+			
+		String info_after=info_before+temp.toString();
+		System.out.println(info_after);
+		photo.setdescription(info_after);
+		p.update_info(photo);
+		
+		/*Map<String, String> info=this.loadinfo();
+	
+		
 		String newvalue="";
 		BufferedWriter bwrite=null;
 		
@@ -44,7 +76,7 @@ public class Info {
 					writer.flush();
 				}
 				write.close();
-				writer.close();
+				writer.close();  
 				 
 				  System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				}catch (Exception e) {
@@ -52,13 +84,13 @@ public class Info {
 					System.out.println("存图片信息错误！！！！！！！！！！！！！！！！");
 				}
 			
-		
+		*/
 
 		
 		
 	}
 	
-	public Map<String,String> loadinfo() throws FileNotFoundException {  
+	/*public Map<String,String> loadinfo() throws FileNotFoundException {  
 		BufferedReader load=null;
 		String line=null;
 		Map<String, String> info=new TreeMap<String,String>(); 
@@ -84,5 +116,7 @@ public class Info {
 		return info;
 		
 	}
-
+*/
+	
+	
 }

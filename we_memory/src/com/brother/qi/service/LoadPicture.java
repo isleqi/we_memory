@@ -5,15 +5,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
+
+import com.brother.qi.dao.Photo_info_dao;
+import com.brother.qi.model.Photo_info;
+
+
 
 
 @Service
 public class LoadPicture {
-	
+	//ClassPathXmlApplicationContext cf=new ClassPathXmlApplicationContext("spring-hibernate.xml");
+	//Photo_info_dao p=(Photo_info_dao)cf.getBean("photo");
 	public ArrayList getphoto(String path){
-		String root=System.getProperty("root");
-		System.out.println(root);
+		
+		String root="F:\\";
+		//System.out.println(root);
 		path="picture"+path+"/";
 		File f=new File(root+path);
 		File[] fil=f.listFiles();
@@ -30,14 +38,21 @@ public class LoadPicture {
 					for(int k=0;k<picture.length;k++) {
 						temp.append(path).append(fil[i].getName()).append("/").append(fil2[j].getName()).append("/").append(picture[k]);
 						//picture[k]=path+fil[i].getName()+"/"+fil2[j].getName()+"/"+picture[k];
+						//Photo_info photo=new Photo_info();
+						//photo.setphotoname(temp.toString());
+						//p.insert_info(photo);
 						picture[k]=temp.toString();
 						string_len=temp.length();
                         temp.delete(0, string_len);					  
 						}
 					if(picture!=null)
-					name.addAll(Arrays.asList(picture));
+					
+						name.addAll(Arrays.asList(picture));
+					    
+					
 					}
-				}
+					}
+				
 		
 			else
 				{
@@ -48,6 +63,7 @@ public class LoadPicture {
                 temp.delete(0, string_len);		
 				}
 		}
+		
 		return name;
 		
 	}
