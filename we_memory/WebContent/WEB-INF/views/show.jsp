@@ -12,12 +12,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1" /> 
 <title>Brother QI</title>
-<script type="text/javascript" src="js/jquery.validate.min.js"></script>
-<script type="text/javascript" src="js/ImageScroll.js"></script>
-<script type="text/javascript" src="js/jqurey.js"></script>
-<script src="js/jquery.slideBox.min.js" type="text/javascript"></script>
-<script src="js/jquery.min.js" type="text/javascript"></script>
-<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
 <link rel="stylesheet" href="css/site.css" type="text/css" media="screen, projection"/>
 <link rel="stylesheet" href="css/style.css" type="text/css" media="screen, projection"/>
 <link href="css/jquery.slideBox.css" rel="stylesheet" type="text/css"/>
@@ -33,89 +28,16 @@ top: 110px;
 width: 180px;}
 }
 </style>
-<script>
-//<![CDATA[
 
-		$(document).ready(function(){
-						  
-			 $("#year2015").click(function(){
-			    $("#mon2015").slideToggle("slow");
-			  });
-
-			  $("#year2016").click(function(){
-				    $("#mon2016").slideToggle("slow");
-				  });
-
-			  $("#year2017").click(function(){
-				    $("#mon2017").slideToggle("slow");
-				  });
-			  $("#search").click(function(){
-				    $("#sea").slideToggle("slow");
-				  });
-
-			  $("#time").click(function(){
-				    $("#made").slideToggle("slow");
-				  }); 
-
-			
-			});
-
-		
-		window.onscroll=function(e){
-			var e =e || window.event;
-			var t = document.documentElement.scrollTop || document.body.scrollTop; 
-		    var top_div = document.getElementById( "sidebar" );
-		    var top_=document.getElementById( "demo1" );
-		   if(t>50)
-		  {top_div.style.position="fixed";
-		  top_div.style.top="30px";
-		
-		  }
-		   else
-			   {
-			   top_div.style.position="";
-				  top_div.style.top="110px";
-				  
-			   }
-
-			}
-
-	//]]> 
-
-</script>
-<script src="js/jquery.min.js" type="text/javascript"></script>
-<script src="js/jquery.slideBox.min.js" type="text/javascript"></script>
-<script>
-
-
-	jQuery(function($){
-	
-		$('#demo1').slideBox({
-			direction : 'left',
-			duration : 0.3,
-			easing : 'swing',//swing,linear//滚动特效
-			delay : 3,
-			hideClickBar : true,
-			hideBottomBar : true
-		});
-		
-	});
-	
-
-</script>
 </head>
 
 <body style="position: static;">
-<div>
-<audio  autoplay="auto" controls="controls" loop="loop" style="display:none">
-  <source src="music.mp3" type="audio/ogg" />
-</audio>
-</div>
+
 <div id="page" class="container_24">
 	<div id="header">
 		<div id="logo">
 			<a href="we_memory.jsp"><img id="logo-image" alt="logo" src="img/logo.jpg"/></a>
-<div class="brown" style="position: fixed ;margin-left: 50px;top:150px;font-size: 20px;font-weight: bold;font-family: Futura,helvetica,arial,sans-serif;">
+			<div class="brown" style="padding: 5px 5px 5px 5px;position: fixed ;margin-left:50px;top :150px;font-size: 20px;font-weight: bold;font-family: Futura,helvetica,arial,sans-serif;">
 <% 
 Calendar start=Calendar.getInstance();
 Calendar current=Calendar.getInstance();
@@ -158,8 +80,8 @@ out.write(day+"days");
 <ul id="daoul" >  
 <script charset="Shift_JIS" src="http://chabudai.sakura.ne.jp/blogparts/honehoneclock/honehone_clock_wh.js"></script> 
  <div class="date">
-              <a id="time" style="margin-left: 50px;color: black;font-weight: bold;font-size: 25px">time</a>
- <ul id="made">
+              <a id=<%if(path==null) out.write("time2"); else out.write("time"); %> style="margin-left: 50px;color: black;font-weight: bold;font-size: 25px">time</a>
+ <ul id="made" style="display: none;">
        <li >
           <a id="year2015" style="color: black;margin-left: 25px;font-weight: bold;">2015</a> 
                 <ul id="mon2015" style="display: none;color: black;">
@@ -218,11 +140,31 @@ out.write(day+"days");
                    </ul>
 
         </li>
+         <li>
+<a id="year2018" style="color: black;margin-left: 25px;font-weight: bold;" >2018</a> 
+                <ul id="mon2018" style="color: black;display: none">
+                    <li style="color: black;"><a href=<%=path+"?year=2018&mon=1"%>>1</a></li>
+                    <li><a href=<%=path+"?year=2018&mon=2"%>>2</a></li>
+                    <li><a href=<%=path+"?year=2018&mon=3"%>>3</a></li>
+                    <li><a href=<%=path+"?year=2018&mon=4"%>>4</a></li>
+                    <li><a href=<%=path+"?year=2018&mon=5"%>>5</a></li>
+                    <li><a href=<%=path+"?year=2018&mon=6"%>>6</a></li>
+                    <li><a href=<%=path+"?year=2018&mon=7"%>>7</a></li>
+                    <li><a href=<%=path+"?year=2018&mon=8"%>>8</a></li>
+                    <li><a href=<%=path+"?year=2018&mon=9"%>>9</a></li>
+                    <li><a href=<%=path+"?year=2018&mon=10"%>>10</a></li>
+                    <li><a href=<%=path+"?year=2018&mon=11"%>>11</a></li>
+                    <li><a href=<%=path+"?year=2018&mon=12"%>>12</a></li>
+                    
+                   </ul>
+
+        </li>
        
  </ul>
  
  </div>
-      
+      <a id="upload"  href="upload">upload</a>
+      <a id="recent"  href="recent"> recent</a>
        <a id="search">Search</a>
  <form action="searchphoto">
  <input id="sea" name="search" value="search for description..."  size="32"   type="text" onclick="this.value=''"/>
@@ -247,15 +189,18 @@ out.write(day+"days");
    currentPage = pUtil.getCurrentPage();
   
    for (int i = pUtil.getFromIndex();i < pUtil.getToIndex(); i++) {
+	   String temp=photoname.get(i).toString();
+	   temp=temp.substring(temp.indexOf("/"));
+	   temp="temp"+temp;
 	if(i%3==0){
 		
-		divone=divone+"<a href=\"picture_info?picture_path="+photoname.get(i)+"\">"+"<img src=\""+photoname.get(i)+"\">"+"</img>"+"</a>";
+		divone=divone+"<a href=\"picture_info?picture_path="+photoname.get(i)+"\">"+"<img src=\""+temp+"\">"+"</img>"+"</a>";
 	} 
 	if(i%3==1){
-		divtwo=divtwo+"<a href=\"picture_info?picture_path="+photoname.get(i)+"\">"+"<img src=\""+photoname.get(i)+"\">"+"</img>"+"</a>";
+		divtwo=divtwo+"<a href=\"picture_info?picture_path="+photoname.get(i)+"\">"+"<img src=\""+temp+"\">"+"</img>"+"</a>";
 	}
 	if(i%3==2){
-		divthree=divthree+"<a href=\"picture_info?picture_path="+photoname.get(i)+"\">"+"<img src=\""+photoname.get(i)+"\">"+"</img>"+"</a>";
+		divthree=divthree+"<a href=\"picture_info?picture_path="+photoname.get(i)+"\">"+"<img src=\""+temp+"\">"+"</img>"+"</a>";
 
 	}
 	
@@ -297,7 +242,96 @@ else
 </div>   
  
 	</div>
+<script type="text/javascript" src="js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="js/ImageScroll.js"></script>
+<script type="text/javascript" src="js/jqurey.js"></script>
+<script src="js/jquery.slideBox.min.js" type="text/javascript"></script>
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="js/jquery.slideBox.min.js" type="text/javascript"></script>
+<script>
+//<![CDATA[
+
+		$(document).ready(function(){
+
+	          
+			
+			$("#search").click(function(){
+			    $("#sea").slideToggle("slow");
+			  });  
+			
+			 $("#year2015").click(function(){
+			    $("#mon2015").slideToggle("slow");
+			  });
+
+			  $("#year2016").click(function(){
+				    $("#mon2016").slideToggle("slow");
+				  });
+
+			  $("#year2017").click(function(){
+				    $("#mon2017").slideToggle("slow");
+				  });
+			  $("#year2018").click(function(){
+				    $("#mon2018").slideToggle("slow");
+				  });
+			 
+
+			  $("#time").click(function(){
+				    $("#made").slideToggle("slow");
+				  }); 
+
+			  jiazai();
+			  
+			});
+
+          
+		  
+		window.onscroll=function(e){
+			var e =e || window.event;
+			var t = document.documentElement.scrollTop || document.body.scrollTop; 
+		    var top_div = document.getElementById( "sidebar" );
+		    var top_=document.getElementById( "demo1" );
+		   if(t>50)
+		  {top_div.style.position="fixed";
+		  top_div.style.top="30px";
+		
+		  }
+		   else
+			   {
+			   top_div.style.position="";
+				  top_div.style.top="110px";
+				  
+			   }
+
+			}
+
+	//]]> 
+
+</script>
+
+<script>
 
 
+	jQuery(function($){
+	
+		$('#demo1').slideBox({
+			direction : 'left',
+			duration : 0.3,
+			easing : 'swing',//swing,linear//滚动特效
+			delay : 3,
+			hideClickBar : true,
+			hideBottomBar : true
+		});
+		
+	});
+	
+
+</script>
+<div>
+<audio  autoplay="auto" controls="controls" loop="loop" style="display:none">
+  <source src="music.mp3" type="audio/ogg" />
+</audio>
+</div>
 </body>
 </html>

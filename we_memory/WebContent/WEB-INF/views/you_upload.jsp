@@ -1,12 +1,8 @@
 
-<%@page import="com.brother.qi.service.Load_tag"%>
-<%@page import="com.brother.qi.model.Photo_info"%>
 <%@page import="org.apache.catalina.connector.Request"%>
 <%@page import="org.springframework.web.context.request.RequestScope"%>
 <%@page import="java.util.*"%>
-<%@page import="com.brother.qi.dao.Photo_info_dao"%>
-<%@page import="java.io.File"%>
-<%@page import="com.brother.qi.service.Hibernate_init"%>
+<%@page import="com.brother.qi.service.Pagenum" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -17,29 +13,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" /> 
 <title>Brother QI</title>
 
-
-
 <link rel="stylesheet" href="css/site.css" type="text/css" media="screen, projection"/>
 <link rel="stylesheet" href="css/style.css" type="text/css" media="screen, projection"/>
-
+<link href="css/jquery.slideBox.css" rel="stylesheet" type="text/css"/>
 <link rel="stylesheet" href="css/screen.css" type="text/css" media="screen, projection"/>
 <link rel="stylesheet" href="css/960.css" type="text/css" media="screen, projection"/>
 <link rel="stylesheet" href="css/print.css" type="text/css"  media="print"/>
 <link rel="stylesheet" href="css/superfish.css" type="text/css"  media="screen, projection"/>
 <style type="text/css">
-#sidebar{position: absolute;
+#sidebar
+{position: absolute;
 margin-left: 825px;
 top: 110px;
 width: 180px;}
-.picture_info{top:20px;margin-left: 280px;position: relative;}
-
-
+}
 </style>
 
 </head>
 
 <body style="position: static;">
-
+<div>
+<audio  autoplay="auto" controls="controls" loop="loop" style="display:none">
+  <source src="music.mp3" type="audio/ogg" />
+</audio>
+</div>
 <div id="page" class="container_24">
 	<div id="header">
 		<div id="logo">
@@ -55,6 +52,13 @@ long day=(c-s)/(24 * 60 * 60 * 1000);
 out.write(day+"days");
 %>
 </div>
+			<!-- <div id="demo1" class="slideBox" >
+  <ul class="items" style="width: 3200px; left: -1920px;">
+    <li class="" style="width: 100px; "><img src="picture/me.jpg" style="width:90px"/></li>
+    <li class="" style="width: 100px; "><img src="picture/love.jpg" style="width:90px"/></li>
+    <li class="" style="width: 100px; "><img src="picture/you.jpg" style="width:90px"/></li>
+  </ul>
+  </div> -->
 			<div id="title-of-site" class="brown">Brother Qi and Sister Xin</div>
 			<div class="nav">
 			<ul id="menu-main-menu" class="sf-menu">
@@ -66,29 +70,26 @@ out.write(day+"days");
 			
 			
 
-</ul></div>
+</ul>
+</div>
 </div>
 </div>
 
 <div id="sidebar" class="grid_8 last" >
 
 
-
- 
+ <%! String path;%>
+              <%path=(String)request.getAttribute("path"); %>
+ <div>
 <ul id="daoul" >  
 <script charset="Shift_JIS" src="http://chabudai.sakura.ne.jp/blogparts/honehoneclock/honehone_clock_wh.js"></script> 
- 
-<li class="folder-collection" style="margin-left: 50px">
-
-           <a id="time">time</a>
-          <div class="date" style="display:none" >
-            <ul id="ha" >
-              <%! String path;%>
-              <%path=(String)request.getAttribute("path"); %>
-                  <li class="page-collection">
-                    <a id="year2015">2015</a>
-                    <ul id="mon2015" style="display: none">
-                    <li><a href=<%=path+"?year=2015&mon=1"%>>1</a></li>
+ <div class="date">
+              <a id="time" style="margin-left: 50px;color: black;font-weight: bold;font-size: 25px">time</a>
+ <ul id="made" style="display: none;">
+       <li >
+          <a id="year2015" style="color: black;margin-left: 25px;font-weight: bold;">2015</a> 
+                <ul id="mon2015" style="display: none;color: black;">
+                    <li ><a href=<%=path+"?year=2015&mon=1"%>>1</a></li>
                     <li><a href=<%=path+"?year=2015&mon=2"%>>2</a></li>
                     <li><a href=<%=path+"?year=2015&mon=3"%>>3</a></li>
                     <li><a href=<%=path+"?year=2015&mon=4"%>>4</a></li>
@@ -102,11 +103,12 @@ out.write(day+"days");
                     <li><a href=<%=path+"?year=2015&mon=12"%>>12</a></li>
                     
                    </ul>
-                  </li>
-                
-                  <li class="page-collection">
-                     <a id="year2016" >2016</a>
-                    <ul id="mon2016" style="display: none">
+
+        </li>
+         <li>
+         
+    <a id="year2016" style="color: black;margin-left: 25px;font-weight: bold;" >2016</a> 
+                <ul id="mon2016" style="color: black;display: none">
                     <li><a href=<%=path+"?year=2016&mon=1"%>>1</a></li>
                     <li><a href=<%=path+"?year=2016&mon=2"%>>2</a></li>
                     <li><a href=<%=path+"?year=2016&mon=3"%>>3</a></li>
@@ -121,12 +123,12 @@ out.write(day+"days");
                     <li><a href=<%=path+"?year=2016&mon=12"%>>12</a></li>
                     
                    </ul>
-                  </li>
-                
-                  <li class="page-collection">
-                     <a id="year2017"  >2017</a>
-                     <ul id="mon2017" style="display: none">
-                    <li><a href=<%=path+"?year=2017&mon=1"%>>1</a></li>
+
+        </li>
+        <li>
+<a id="year2017" style="color: black;margin-left: 25px;font-weight: bold;" >2017</a> 
+                <ul id="mon2017" style="color: black;display: none">
+                    <li style="color: black;"><a href=<%=path+"?year=2017&mon=1"%>>1</a></li>
                     <li><a href=<%=path+"?year=2017&mon=2"%>>2</a></li>
                     <li><a href=<%=path+"?year=2017&mon=3"%>>3</a></li>
                     <li><a href=<%=path+"?year=2017&mon=4"%>>4</a></li>
@@ -140,117 +142,161 @@ out.write(day+"days");
                     <li><a href=<%=path+"?year=2017&mon=12"%>>12</a></li>
                     
                    </ul>
-                   
-                        </li>
-                
- 
-                 
-            </ul>
-        
-         
-          </div>
 
-      </li>
+        </li>
+         <li>
+<a id="year2018" style="color: black;margin-left: 25px;font-weight: bold;" >2018</a> 
+                <ul id="mon2018" style="color: black;display: none">
+                    <li style="color: black;"><a href=<%=path+"?year=2018&mon=1"%>>1</a></li>
+                    <li><a href=<%=path+"?year=2018&mon=2"%>>2</a></li>
+                    <li><a href=<%=path+"?year=2018&mon=3"%>>3</a></li>
+                    <li><a href=<%=path+"?year=2018&mon=4"%>>4</a></li>
+                    <li><a href=<%=path+"?year=2018&mon=5"%>>5</a></li>
+                    <li><a href=<%=path+"?year=2018&mon=6"%>>6</a></li>
+                    <li><a href=<%=path+"?year=2018&mon=7"%>>7</a></li>
+                    <li><a href=<%=path+"?year=2018&mon=8"%>>8</a></li>
+                    <li><a href=<%=path+"?year=2018&mon=9"%>>9</a></li>
+                    <li><a href=<%=path+"?year=2018&mon=10"%>>10</a></li>
+                    <li><a href=<%=path+"?year=2018&mon=11"%>>11</a></li>
+                    <li><a href=<%=path+"?year=2018&mon=12"%>>12</a></li>
+                    
+                   </ul>
+
+        </li>
+       
+ </ul>
+ 
+ </div>
       <a id="upload"  href="upload">upload</a>
       <a id="recent"  href="recent"> recent</a>
        <a id="search">Search</a>
-      <form action="searchphoto">
+ <form action="searchphoto">
  <input id="sea" name="search" value="search for description..."  size="32"   type="text" onclick="this.value=''"/>
- </form>
- 
- 
- 
       </ul>
-      <div style="margin-left: 25px;">
- <div   style="font-family: Futura,helvetica,arial,sans-serif;font-weight: bold;font-size: 25px;margin-left: 10px;color:black;">description</div>
- <div id="tag"  style="font-family: Futura,helvetica,arial,sans-serif;font-weight: bold;font-size: 17px;margin-left: 10px;color: black;">
-
-  <%
-  path=(String)request.getAttribute("picture_path");
-		Load_tag load=new Load_tag(path);
-		Photo_info res=load.load();
-		String des=res.getdescription();
-		if(des!=null&&!des.equals("")){
-		String tag[]=des.split("&");
-		for(int i=0;i<tag.length;i++){
-			out.write("<div class=\"des\" style=\"margin-bottom:2px; padding: 5px 5px 5px 5px;  \"><center>"+tag[i]+"</center></div>");
-		}
-		
-		}
-  %>
  
- </div>
+  </div>
       
 	</div>
-</div>
-<div class="picture_info">
+<%
+
+	String divphoto="<div class=\"photo\">";
+    String divone="<div class=\"one\">";
+    String divtwo="<div class=\"two\">";
+    String divthree="<div class=\"three\">";
+     
+   ArrayList photoname=(ArrayList)request.getAttribute("photoname");
+   String pageStr = request.getParameter("page");
+   int currentPage = 1;
+   if (pageStr != null)
+   currentPage = Integer.parseInt(pageStr);
+   Pagenum pUtil = new Pagenum(21, photoname.size(), currentPage);
+   currentPage = pUtil.getCurrentPage();
+  
+   for (int i = pUtil.getFromIndex();i < pUtil.getToIndex(); i++) {
+	   String temp=photoname.get(i).toString();
+	   temp=temp.substring(temp.indexOf("/"));
+	   temp="temp"+temp;
+	if(i%3==0){
+		
+		divone=divone+"<a href=\"picture_info?picture_path="+photoname.get(i)+"\">"+"<img src=\""+photoname.get(i)+"\">"+"</img>"+"</a>";
+	} 
+	if(i%3==1){
+		divtwo=divtwo+"<a href=\"picture_info?picture_path="+photoname.get(i)+"\">"+"<img src=\""+photoname.get(i)+"\">"+"</img>"+"</a>";
+	}
+	if(i%3==2){
+		divthree=divthree+"<a href=\"picture_info?picture_path="+photoname.get(i)+"\">"+"<img src=\""+photoname.get(i)+"\">"+"</img>"+"</a>";
+
+	}
+	
+} 
+
+      divphoto=divphoto+divone+"</div>"+divtwo+"</div>"+divthree+"</div>";
+      out.write(divphoto);
+      %>
+      
  
-<div id="fd">
-<img  src=<%=path %> style="width: 500px"/>
+   
+ 
+     <% 
+      out.write("</div>");
+
+
+%>
+<%
+if(pageStr==null)
+	out.write("<div style=\"display:none\">");
+else
+	out.write("<div>");
+
+%>
+ 
+<div style="margin-top:2300px;margin-left: 360px;font-family: Futura,helvetica,arial,sans-serif;font-weight: bold;font-size: 20px;text-decoration: none">
+  <tr>
+<td id="daohan" >
+<a class="brown" style="text-decoration: none" href=<%=path+"?page=1" %>>----------first</a>
+<a class="brown" style="text-decoration: none" href=<%=path+"?page="+(currentPage - 1) %>>pre</a>
+<a class="brown" style="text-decoration: none" href=<%=path+"?page="+(currentPage +1) %>>next</a>
+
+<a class="brown" style="text-decoration: none" href=<%=path +"?page="+pUtil.getPageCount()%>>last----------</a>
+</td>
+</tr>
 </div>
+<div style="font-family: Futura,helvetica,arial,sans-serif;font-weight: bold;font-size: 10px;margin-left: 420px;margin-top: 50px;margin-bottom: 50px">❤To my dear Xin by Qi--2017.12.08❤</div>
 
-<div>
-<%request.setCharacterEncoding("utf-8"); %>
-<div class="brown adddesc" style="font-family: Futura,helvetica,arial,sans-serif;font-weight: bold;font-size: 25px;margin-left: 150px">add description</div>
-
-<div id="desc" style="margin-left: 85px;display: none;font-weight: bold;">
-<form action="addinfo" >
-<input name="name" value=<%=path%> type="hidden"/>
-<input name="value" value="为它添加标签吧~"   size="50"   type="text" onclick="this.value=''" style="font-weight: bold;"/>
-</form>
-</div>
-<div class="brown" style="font-family: Futura,helvetica,arial,sans-serif;font-weight: bold;font-size: 25px;margin-left: 210px;" onclick=del('<%=path %>') >delect</div>
-
-</div>	
-<div style="font-family: Futura,helvetica,arial,sans-serif;font-weight: bold;font-size: 10px;margin-left: 120px;margin-top: 50px;margin-bottom: 20px">❤To my dear Xin by Qi--2017.12.08❤</div>
-
-</div>
-
-
-
-
-
-</div>
-
-
+</div>   
+ 
+	</div>
+<script type="text/javascript" src="js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="js/ImageScroll.js"></script>
+<script type="text/javascript" src="js/jqurey.js"></script>
+<script src="js/jquery.slideBox.min.js" type="text/javascript"></script>
+<script src="js/jquery.min.js" type="text/javascript"></script>
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="js/jquery.slideBox.min.js" type="text/javascript"></script>
 <script>
 //<![CDATA[
 
 		$(document).ready(function(){
-			
-			$("#search").click(function(){
-			    $("#sea").slideToggle("slow");
-			  });  
-			  $(".adddesc").click(function(){
-				    $("#desc").slideToggle("slow");
+						  
+			 $("#year2015").click(function(){
+			    $("#mon2015").slideToggle("slow");
+			  });
+
+			  $("#year2016").click(function(){
+				    $("#mon2016").slideToggle("slow");
 				  });
 
+			  $("#year2017").click(function(){
+				    $("#mon2017").slideToggle("slow");
+				  });
+			  $("#year2018").click(function(){
+				    $("#mon2018").slideToggle("slow");
+				  });
+			  $("#search").click(function(){
+				    $("#sea").slideToggle("slow");
+				  });
+
+			 
 			
 			});
 
-
-    function del(path){
-        //alert(path);
-      $.get("delect?path="+path);
-      alert("删除成功！！！");
-      window.location.href=document.referrer;  
-  
-
-        }
-      
 		
 		window.onscroll=function(e){
 			var e =e || window.event;
 			var t = document.documentElement.scrollTop || document.body.scrollTop; 
 		    var top_div = document.getElementById( "sidebar" );
+		    var top_=document.getElementById( "demo1" );
 		   if(t>50)
 		  {top_div.style.position="fixed";
-		  top_div.style.top="30px";}
+		  top_div.style.top="30px";
+		
+		  }
 		   else
 			   {
 			   top_div.style.position="";
 				  top_div.style.top="110px";
+				  
 			   }
 
 			}
@@ -259,5 +305,23 @@ out.write(day+"days");
 
 </script>
 
+<script>
+
+
+	jQuery(function($){
+	
+		$('#demo1').slideBox({
+			direction : 'left',
+			duration : 0.3,
+			easing : 'swing',//swing,linear//滚动特效
+			delay : 3,
+			hideClickBar : true,
+			hideBottomBar : true
+		});
+		
+	});
+	
+
+</script>
 </body>
 </html>

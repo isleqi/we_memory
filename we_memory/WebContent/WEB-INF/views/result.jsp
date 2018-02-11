@@ -11,14 +11,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1" /> 
 <title>Brother QI</title>
-<script type="text/javascript" src="js/jquery.validate.min.js"></script>
-<script type="text/javascript" src="js/jquery.columnizer.js"></script>
-<script type="text/javascript" src="js/wpgform.js"></script>
-<script type="text/javascript" src="js/devicepx-jetpack.js"></script>
-<script type="text/javascript" src="js/analytics.js"></script>
-<script type="text/javascript" src="js/common-809928c868e83ccb540a-min.en-US.js"></script>
-<script type="text/javascript" src="js/hahaha.js"></script>
-<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
 <link rel="stylesheet" href="css/site.css" type="text/css" media="screen, projection"/>
 <link rel="stylesheet" href="css/style.css" type="text/css" media="screen, projection"/>
 
@@ -34,32 +27,7 @@ top: 110px;
 width: 180px;}
 }
 </style>
-<script>
-//<![CDATA[
 
-		$(document).ready(function(){
-			 
-			});
-
-		
-		window.onscroll=function(e){
-			var e =e || window.event;
-			var t = document.documentElement.scrollTop || document.body.scrollTop; 
-		    var top_div = document.getElementById( "sidebar" );
-		   if(t>50)
-		  {top_div.style.position="fixed";
-		  top_div.style.top="30px";}
-		   else
-			   {
-			   top_div.style.position="";
-				  top_div.style.top="110px";
-			   }
-
-			}
-
-	//]]> 
-
-</script>
 </head>
 
 <body style="position: static;">
@@ -68,7 +36,7 @@ width: 180px;}
 	<div id="header">
 		<div id="logo">
 			<a href="we_memory.jsp"><img id="logo-image" alt="logo" src="img/logo.jpg"/></a>
-			<div class="brown" style="position: fixed ;margin-left: 50px;top:150px;font-size: 20px;font-weight: bold;font-family: Futura,helvetica,arial,sans-serif;">
+			<div class="brown" style="padding: 5px 5px 5px 5px;position: fixed ;margin-left:50px;top :150px;font-size: 20px;font-weight: bold;font-family: Futura,helvetica,arial,sans-serif;">
 <% 
 Calendar start=Calendar.getInstance();
 Calendar current=Calendar.getInstance();
@@ -174,7 +142,8 @@ out.write(day+"days");
           </div>
 
       </li>
-      
+      <a id="upload"  href="upload">upload</a>
+      <a id="recent"  href="recent"> recent</a>
         <a id="search">Search</a>
       <form action="searchphoto">
  <input id="sea" name="search" value="search for description..."  size="32"   type="text" onclick="this.value=''"/>
@@ -196,15 +165,18 @@ out.write(day+"days");
     
   
 for(int i=0;i<res.size();i++){
+	 String temp=res.get(i).toString();
+	   temp=temp.substring(temp.indexOf("/"));
+	   temp="temp"+temp;
 	if(i%3==0){
 		
-		divone=divone+"<a href=\"picture_info?picture_path="+res.get(i)+"\">"+"<img src=\""+res.get(i)+"\">"+"</img>"+"</a>";
+		divone=divone+"<a href=\"picture_info?picture_path="+res.get(i)+"\">"+"<img src=\""+temp+"\">"+"</img>"+"</a>";
 	} 
 	if(i%3==1){
-		divtwo=divtwo+"<a href=\"picture_info?picture_path="+res.get(i)+"\">"+"<img src=\""+res.get(i)+"\">"+"</img>"+"</a>";
+		divtwo=divtwo+"<a href=\"picture_info?picture_path="+res.get(i)+"\">"+"<img src=\""+temp+"\">"+"</img>"+"</a>";
 	}
 	if(i%3==2){
-		divthree=divthree+"<a href=\"picture_info?picture_path="+res.get(i)+"\">"+"<img src=\""+res.get(i)+"\">"+"</img>"+"</a>";
+		divthree=divthree+"<a href=\"picture_info?picture_path="+res.get(i)+"\">"+"<img src=\""+temp+"\">"+"</img>"+"</a>";
 
 	}
 	
@@ -219,8 +191,34 @@ for(int i=0;i<res.size();i++){
 
 	</div>
 
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 
+<script>
+//<![CDATA[
 
+		$(document).ready(function(){
+			 
+			});
+
+		
+		window.onscroll=function(e){
+			var e =e || window.event;
+			var t = document.documentElement.scrollTop || document.body.scrollTop; 
+		    var top_div = document.getElementById( "sidebar" );
+		   if(t>50)
+		  {top_div.style.position="fixed";
+		  top_div.style.top="30px";}
+		   else
+			   {
+			   top_div.style.position="";
+				  top_div.style.top="110px";
+			   }
+
+			}
+
+	//]]> 
+
+</script>
 
 </body>
 </html>
