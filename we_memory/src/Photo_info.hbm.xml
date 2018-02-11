@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-11-1 22:20:09 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+ <class name="com.brother.qi.model.Photo_info" table="photo_info">
+ <id name="photoname" type="java.lang.String">
+ <column name="photoname"/>
+ </id>
+ <property name="description" type="java.lang.String" column="description"/>
+
+ </class>
+ 
+ <class name="com.brother.qi.model.History" table="history">
+ <id name="photoname" type="java.lang.String">
+ <column name="photoname"/>
+ </id>
+  <property name="time" type="java.lang.String" column="time"/>
+ 
+ </class>
+</hibernate-mapping>

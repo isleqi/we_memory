@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+        
+        
+   <context:component-scan base-package="com.brother.qi.model">
+  <context:exclude-filter type="annotation"
+   expression="org.springframework.stereotype.Controller" />
+ </context:component-scan> 
+       <!--   <context:component-scan base-package="com.brother.qi"></context:component-scan>  -->
+        <context:property-placeholder location="classpath:db.properties" />
+        <bean class="com.mchange.v2.c3p0.ComboPooledDataSource" id="dataSource">
+            <property name="driverClass" value="${driverClass}"></property>
+            <property name="jdbcUrl" value="${jdbcUrl}"></property>
+            <property name="user" value="${user}"></property>
+            <property name="password" value="${password}"></property>
+            <property name="minPoolSize" value="${minPoolSize}"></property>
+            <property name="maxPoolSize" value="${maxPoolSize}"></property>
+            <property name="initialPoolSize" value="${initialPoolSize}"></property>
+        </bean>
+        <bean class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" id="factory">
+            <property name="dataSource" ref="dataSource"></property>
+            <property name="configLocation" value="classpath:hibernate.cfg.xml"></property>
+            <property name="mappingLocations" value="classpath:Photo_info.hbm.xml"/>
+        </bean>
+        <bean class="org.springframework.orm.hibernate4.HibernateTransactionManager" id="transactionManager">
+         <property name="sessionFactory" ref="factory"></property>
+        </bean>
+       <tx:advice id="txAdvice" transaction-manager="transactionManager">
+            <tx:attributes>
+                <tx:method name="*"/>
+            </tx:attributes>
+        </tx:advice>
+        <aop:config>
+            <aop:pointcut expression="execution(* com.brother.qi.*.*.*(..))" id="pointCut"/>
+            <aop:advisor advice-ref="txAdvice" pointcut-ref="pointCut"/> 
+        </aop:config>
+     <bean id="hibernateTemplate" class="org.springframework.orm.hibernate4.HibernateTemplate">
+        <property name="sessionFactory" ref="factory"></property>
+        </bean>
+         <bean id="photo" class="com.brother.qi.dao.Photo_info_dao">
+         <property name="sessionFactory" ref="factory"/>
+         <property name="hibernateTemplate" ref="hibernateTemplate"/>
+         </bean>
+         <bean id="history" class="com.brother.qi.dao.History_dao">
+         <property name="sessionFactory" ref="factory"/>
+         <property name="hibernateTemplate" ref="hibernateTemplate"/>
+         </bean>
+        
+        
+        </beans>
