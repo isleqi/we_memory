@@ -34,18 +34,11 @@ public class Info {
 		String info_before="";
 		if(photo.getdescription()!=null)
 		info_before=photo.getdescription();
-		String add_info[]=value.split(" ");
 		StringBuffer temp=new StringBuffer("");
-		
-		if(info_before!="")
+		if(!info_before.equals(""))
 			temp.append("&");
 		
-		for(int i=0;i<add_info.length;i++) {
-		 System.out.println(add_info[i]);
-			temp.append(add_info[i]);
-			if(i!=add_info.length-1)
-				temp.append("&");
-		}
+		temp.append(value);
 			
 		String info_after=info_before+temp.toString();
 		System.out.println(info_after);

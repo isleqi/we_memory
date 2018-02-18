@@ -19,28 +19,27 @@ public class Search {
 	public ArrayList<String> search(String description) {
 		ArrayList<String> ans=new ArrayList<String>();
 		String des[]=null;
-		//String value=null;
-		//int flag=-1;
+		
 		if(description!=null) {
 		des=description.split(" ");
 		}
 		for(String d:des) {
 			System.out.println(d);
+			
 		}
 		//int len=0;
 		String temp="";
 		StringBuffer sql=new StringBuffer("from Photo_info where ");
-		sql.append("description like "); 
+		sql.append("description like ?"); 
 		for(int i=0;i<des.length;i++) {
-			temp="'%"+des[i]+"%'";
-			sql.append(temp);
+			des[i]="%"+des[i]+"%";
 			if(i!=des.length-1)
-				sql.append("and description like ");
+				sql.append("and description like ?");
 		}
 		
 			//Map<String,String> photo=info.loadinfo();
 			Photo_info_dao p=(Photo_info_dao)Hibernate_init.cf.getBean("photo");
-			 List<Photo_info> list =p.search(sql.toString());
+			 List<Photo_info> list =p.search(sql.toString(),des);
 			for(Photo_info photo:list) {
 				ans.add(photo.getphotoname());
 			}

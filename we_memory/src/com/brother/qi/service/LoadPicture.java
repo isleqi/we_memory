@@ -17,7 +17,7 @@ import com.brother.qi.model.Photo_info;
 @Service
 public class LoadPicture {
 	//ClassPathXmlApplicationContext cf=new ClassPathXmlApplicationContext("spring-hibernate.xml");
-	//Photo_info_dao p=(Photo_info_dao)cf.getBean("photo");
+	   Photo_info_dao p=(Photo_info_dao)Hibernate_init.cf.getBean("photo");
 	public ArrayList getphoto(String path){
 		
 		String root="F:\\";
