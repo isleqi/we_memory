@@ -62,9 +62,9 @@ out.write(day+"days");
 			<div id="title-of-site" class="brown">Brother Qi and Sister Xin</div>
 			<div class="nav">
 			<ul id="menu-main-menu" class="sf-menu">
-			<li id="menu-item-6107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6107"><a href="she?page=0">She&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-			<li id="menu-item-6107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6107"><a href="we?page=0">We&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-			<li id="menu-item-6107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6107"><a href="works?page=0">Works&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+			<li id="menu-item-6107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6107"><a href="she">She&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+			<li id="menu-item-6107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6107"><a href="we">We&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+			<li id="menu-item-6107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6107"><a href="works">Works&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
 			<li id="menu-item-6107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6107"><a href="http://m.blog.csdn.net/twoonenew">Blog&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
 			<li id="menu-item-6107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6107"><a href="about">About&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
 			
@@ -128,7 +128,7 @@ out.write(day+"days");
         <li>
 <a id="year2017" style="color: black;margin-left: 25px;font-weight: bold;" >2017</a> 
                 <ul id="mon2017" style="color: black;display: none">
-                    <li style="color: black;"><a href=<%=path+"?year=2017&mon=1"%>>1</a></li>
+                    <li><a href=<%=path+"?year=2017&mon=1"%>>1</a></li>
                     <li><a href=<%=path+"?year=2017&mon=2"%>>2</a></li>
                     <li><a href=<%=path+"?year=2017&mon=3"%>>3</a></li>
                     <li><a href=<%=path+"?year=2017&mon=4"%>>4</a></li>
@@ -147,7 +147,7 @@ out.write(day+"days");
          <li>
 <a id="year2018" style="color: black;margin-left: 25px;font-weight: bold;" >2018</a> 
                 <ul id="mon2018" style="color: black;display: none">
-                    <li style="color: black;"><a href=<%=path+"?year=2018&mon=1"%>>1</a></li>
+                    <li><a href=<%=path+"?year=2018&mon=1"%>>1</a></li>
                     <li><a href=<%=path+"?year=2018&mon=2"%>>2</a></li>
                     <li><a href=<%=path+"?year=2018&mon=3"%>>3</a></li>
                     <li><a href=<%=path+"?year=2018&mon=4"%>>4</a></li>
@@ -198,13 +198,13 @@ out.write(day+"days");
 	   temp="temp"+temp;
 	if(i%3==0){
 		
-		divone=divone+"<a href=\"picture_info?picture_path="+photoname.get(i)+"\">"+"<img src=\""+photoname.get(i)+"\">"+"</img>"+"</a>";
+		divone=divone+"<a target=\"_blank\" href=\"picture_info?picture_path="+photoname.get(i)+"\">"+"<img src=\""+photoname.get(i)+"\">"+"</img>"+"</a>";
 	} 
 	if(i%3==1){
-		divtwo=divtwo+"<a href=\"picture_info?picture_path="+photoname.get(i)+"\">"+"<img src=\""+photoname.get(i)+"\">"+"</img>"+"</a>";
+		divtwo=divtwo+"<a target=\"_blank\" href=\"picture_info?picture_path="+photoname.get(i)+"\">"+"<img src=\""+photoname.get(i)+"\">"+"</img>"+"</a>";
 	}
 	if(i%3==2){
-		divthree=divthree+"<a href=\"picture_info?picture_path="+photoname.get(i)+"\">"+"<img src=\""+photoname.get(i)+"\">"+"</img>"+"</a>";
+		divthree=divthree+"<a target=\"_blank\" href=\"picture_info?picture_path="+photoname.get(i)+"\">"+"<img src=\""+photoname.get(i)+"\">"+"</img>"+"</a>";
 
 	}
 	

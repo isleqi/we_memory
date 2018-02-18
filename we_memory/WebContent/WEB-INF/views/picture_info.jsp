@@ -58,9 +58,9 @@ out.write(day+"days");
 			<div id="title-of-site" class="brown">Brother Qi and Sister Xin</div>
 			<div class="nav">
 			<ul id="menu-main-menu" class="sf-menu">
-			<li id="menu-item-6107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6107"><a href="she?page=0">She&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-			<li id="menu-item-6107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6107"><a href="we?page=0">We&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-			<li id="menu-item-6107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6107"><a href="works?page=0">Works&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+			<li id="menu-item-6107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6107"><a href="she">She&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+			<li id="menu-item-6107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6107"><a href="we">We&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+			<li id="menu-item-6107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6107"><a href="works">Works&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
 			<li id="menu-item-6107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6107"><a href="http://m.blog.csdn.net/twoonenew">Blog&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
 			<li id="menu-item-6107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6107"><a href="about">About&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
 			
@@ -80,7 +80,7 @@ out.write(day+"days");
  
 <li class="folder-collection" style="margin-left: 50px">
 
-           <a id="time">time</a>
+           <a id="time" >time</a>
           <div class="date" style="display:none" >
             <ul id="ha" >
               <%! String path;%>
@@ -167,16 +167,21 @@ out.write(day+"days");
 
   <%
   path=(String)request.getAttribute("picture_path");
-		Load_tag load=new Load_tag(path);
+	try{	
+  Load_tag load=new Load_tag(path);
 		Photo_info res=load.load();
 		String des=res.getdescription();
 		if(des!=null&&!des.equals("")){
 		String tag[]=des.split("&");
 		for(int i=0;i<tag.length;i++){
-			out.write("<div class=\"des\" style=\"margin-bottom:2px; padding: 5px 5px 5px 5px;  \"><center>"+tag[i]+"</center></div>");
+			out.write("<div class=\"des\" style=\"cursor:pointer;margin-bottom:2px; padding: 5px 5px 5px 5px;  \"><center>"+tag[i]+"</center></div>");
 		}
 		
 		}
+	}
+	catch(Exception e){
+		out.write("<script>alert(\"该图片不存在！！！\");window.location.href=document.referrer;</script>");
+	}
   %>
  
  </div>
@@ -184,14 +189,17 @@ out.write(day+"days");
 	</div>
 </div>
 <div class="picture_info">
+
+
+  <input type="hidden" id="photo_path" value=<%=path%>></input>
  
 <div id="fd">
-<img  src=<%=path %> style="width: 500px"/>
+<img  id="img" src=<%=path %> style="width: 500px"/>
 </div>
 
 <div>
 <%request.setCharacterEncoding("utf-8"); %>
-<div class="brown adddesc" style="font-family: Futura,helvetica,arial,sans-serif;font-weight: bold;font-size: 25px;margin-left: 150px">add description</div>
+<div id="add_des" class="brown adddesc" style="font-family: Futura,helvetica,arial,sans-serif;font-weight: bold;font-size: 25px;margin-left: 150px">add description</div>
 
 <div id="desc" style="margin-left: 85px;display: none;font-weight: bold;">
 <form action="addinfo" >
@@ -199,7 +207,7 @@ out.write(day+"days");
 <input name="value" value="为它添加标签吧~"   size="50"   type="text" onclick="this.value=''" style="font-weight: bold;"/>
 </form>
 </div>
-<div class="brown" style="font-family: Futura,helvetica,arial,sans-serif;font-weight: bold;font-size: 25px;margin-left: 210px;" onclick=del('<%=path %>') >delect</div>
+<div class="brown" id="delete" style="font-family: Futura,helvetica,arial,sans-serif;font-weight: bold;font-size: 25px;margin-left: 210px;" onclick=del('<%=path %>') >delect</div>
 
 </div>	
 <div style="font-family: Futura,helvetica,arial,sans-serif;font-weight: bold;font-size: 10px;margin-left: 120px;margin-top: 50px;margin-bottom: 20px">❤To my dear Xin by Qi--2017.12.08❤</div>
@@ -229,13 +237,39 @@ out.write(day+"days");
 			
 			});
 
+     $(document).delegate('.des',"click",function(){
+          if(confirm("你要删除这个标签吗？")){
+      		var path=$("#photo_path").val();
+      		var des=this.innerText;
+      		var json={'path':path,'des':des};
+      		
+      		$.ajax({
+          		type:"post",
+                url:"delete_des",
+                data:json,
+               // dataType: "json", 
+                success: function(data){
+                	location.reload();
+               },
+      		error: function (XMLHttpRequest, textStatus, errorThrown) {
+      			 alert(XMLHttpRequest.status);
+      			 alert(XMLHttpRequest.readyState);
+      			 alert(textStatus);
 
+            }
+          		});  
+          }
+      	});
     function del(path){
         //alert(path);
+        if(confirm("你要删除这张图片吗？")){
       $.get("delect?path="+path);
       alert("删除成功！！！");
-      window.location.href=document.referrer;  
-  
+     // window.location.href=document.referrer;  
+      window.opener=null;
+      window.open('','_self');
+      window.close();
+        }
 
         }
       

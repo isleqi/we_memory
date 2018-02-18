@@ -22,20 +22,33 @@
 <link rel="stylesheet" href="css/main.css" type="text/css"  media="screen, projection"/>
 
 <style type="text/css">
-#sidebar
-{position: absolute;
+#sidebar{position: absolute;
 margin-left: 825px;
 top: 110px;
 width: 180px;}
+
 .picture_info{top:20px;margin-left: 280px;position: relative;}
-}
+
+.black_{ display: none; position: absolute; top:0%;width: 100%; height: 100%; background-color: black; z-index:1001; -moz-opacity: 0.8; opacity:.80; filter: alpha(opacity=88); } 
+.white_content { 
+            display: none; 
+            font-size:20px;
+            font-weight:bold;
+            color:#6b0346;
+            text-align:center;
+          
+            z-index:1002; 
+            overflow: auto; 
+        } 
+
 </style>
 
 </head>
 
 <body style="position: static;">
-
+<div id="up_before" class="black_"></div>
 <div id="page" class="container_24">
+
 	<div id="header">
 		<div id="logo">
 			<a href="we_memory.jsp"><img id="logo-image" alt="logo" src="img/logo.jpg"/></a>
@@ -53,9 +66,9 @@ out.write(day+"days");
 			<div id="title-of-site" class="brown">Brother Qi and Sister Xin</div>
 			<div class="nav">
 			<ul id="menu-main-menu" class="sf-menu">
-			<li id="menu-item-6107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6107"><a href="she?page=0">She&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-			<li id="menu-item-6107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6107"><a href="we?page=0">We&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-			<li id="menu-item-6107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6107"><a href="works?page=0">Works&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+			<li id="menu-item-6107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6107"><a href="she">She&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+			<li id="menu-item-6107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6107"><a href="we">We&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+			<li id="menu-item-6107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6107"><a href="works">Works&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
 			<li id="menu-item-6107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6107"><a href="http://m.blog.csdn.net/twoonenew">Blog&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
 			<li id="menu-item-6107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6107"><a href="about">About&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
 			
@@ -157,25 +170,27 @@ out.write(day+"days");
   
       
 	</div>
+	
 <div class="picture_info">
-<form action="selectphoto" method="post" enctype="multipart/form-data">
+<div id="wait" class="white_content" >正在上传，请稍等......</div>
+<form id="selectphoto"  method="post" enctype="multipart/form-data" >
 <p>选择图片</p>
-<input type="file" name="files" accept=".jpg,.JPG" multiple/>
+<input type="file" id="files" name="files" accept=".jpg,.JPG" multiple/>
 <p>选择类型</p>
-<select  name="type" value="she">
+<select id="select_type" name="type" value="she" onchange="_type()">
 <option value="she">she</option>
 <option value="we">we</option>
 <option value="works">works</option>
 </select>
 <p >选择时间</p>
 <div id="selecttime">  
-<select  name="year" value="2015">
+<select  id="select_year" name="year" value="2015">
 <option value="2015">2015</option>
 <option value="2016">2016</option>
 <option value="2017">2017</option>
 <option value="2018">2018</option>
 </select>
-<select  name="mon" value="1">
+<select id="select_mon" name="mon" value="1">
 <option value="1">1</option>
 <option value="2">2</option>
 <option value="3">3</option>
@@ -192,8 +207,8 @@ out.write(day+"days");
 
 </div>
 <p>为他们添加标签</p>
-<input type="text" name="des" ></input>
-<input type="submit" value="Submit"/>
+<input type="text" id="desp" name="des" ></input>
+<input type="button" value="Submit" onclick="up()" />
 </form>
 <div style="font-family: Futura,helvetica,arial,sans-serif;font-weight: bold;font-size: 10px;margin-left: 120px;margin-top: 50px;margin-bottom: 20px">❤To my dear Xin by Qi--2017.12.08❤</div>
 
@@ -221,8 +236,48 @@ out.write(day+"days");
 
 			
 			});
-		
-		
+		function _type(){
+			
+			var select = document.getElementById("select_type");
+			var lastIndex = select.selectedIndex;
+			var type = select.options[lastIndex].value; 
+            var div=document.getElementById("selecttime");
+           if(type=='works'){
+                var div=document.getElementById("selecttime");
+                div.style.display="none";
+                
+               }
+           else
+               div.style.display="";
+                   
+
+			}
+		 function up(){
+			 document.getElementById('up_before').style.display='block';
+			 document.getElementById('wait').style.display='block';
+	            var form = new FormData(document.getElementById("selectphoto"));
+//	             var req = new XMLHttpRequest();
+//	             req.open("post", "${pageContext.request.contextPath}/public/testupload", false);
+//	             req.send(form);
+	            $.ajax({
+	                url:"selectphoto",
+	                type:"post",
+	                data:form,
+	                processData:false,
+	                contentType:false,
+	                success:function(data){
+	                	 document.getElementById('up_before').style.display='none';
+	        			 document.getElementById('wait').style.display='none';
+	                   alert("上传成功！！！！");
+	                   window.location.href="recent";
+	                   
+	                },
+	                error: function (e) {
+	                    alert("上传失败！！！");
+	                }
+	            });        
+	           
+	        }
 		
 		window.onscroll=function(e){
 			var e =e || window.event;

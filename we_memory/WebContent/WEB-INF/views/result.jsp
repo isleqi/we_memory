@@ -50,9 +50,9 @@ out.write(day+"days");
 			<div id="title-of-site" class="brown">Brother Qi and Sister Xin</div>
 			<div class="nav">
 			<ul id="menu-main-menu" class="sf-menu">
-			<li id="menu-item-6107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6107"><a href="she?page=0">She&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-			<li id="menu-item-6107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6107"><a href="we?page=0">We&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-			<li id="menu-item-6107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6107"><a href="works?page=0">Works&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+			<li id="menu-item-6107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6107"><a href="she">She&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+			<li id="menu-item-6107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6107"><a href="we">We&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+			<li id="menu-item-6107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6107"><a href="works">Works&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
 			<li id="menu-item-6107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6107"><a href="http://m.blog.csdn.net/twoonenew">Blog&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
 			<li id="menu-item-6107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6107"><a href="about">About&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
 			
@@ -170,13 +170,13 @@ for(int i=0;i<res.size();i++){
 	   temp="temp"+temp;
 	if(i%3==0){
 		
-		divone=divone+"<a href=\"picture_info?picture_path="+res.get(i)+"\">"+"<img src=\""+temp+"\">"+"</img>"+"</a>";
+		divone=divone+"<a target=\"_blank\" href=\"picture_info?picture_path="+res.get(i)+"\">"+"<img src=\""+temp+"\">"+"</img>"+"</a>";
 	} 
 	if(i%3==1){
-		divtwo=divtwo+"<a href=\"picture_info?picture_path="+res.get(i)+"\">"+"<img src=\""+temp+"\">"+"</img>"+"</a>";
+		divtwo=divtwo+"<a target=\"_blank\" href=\"picture_info?picture_path="+res.get(i)+"\">"+"<img src=\""+temp+"\">"+"</img>"+"</a>";
 	}
 	if(i%3==2){
-		divthree=divthree+"<a href=\"picture_info?picture_path="+res.get(i)+"\">"+"<img src=\""+temp+"\">"+"</img>"+"</a>";
+		divthree=divthree+"<a target=\"_blank\" href=\"picture_info?picture_path="+res.get(i)+"\">"+"<img src=\""+temp+"\">"+"</img>"+"</a>";
 
 	}
 	
@@ -197,7 +197,9 @@ for(int i=0;i<res.size();i++){
 //<![CDATA[
 
 		$(document).ready(function(){
-			 
+			 $("#search").click(function(){
+				    $("#sea").slideToggle("slow");
+				  });
 			});
 
 		
