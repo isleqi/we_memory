@@ -10,6 +10,8 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +42,7 @@ import com.brother.qi.model.Rusult_photo;
 import com.brother.qi.service.Hibernate_init;
 import com.brother.qi.service.Info;
 import com.brother.qi.service.LoadPicture;
+import com.brother.qi.service.Load_tag;
 import com.brother.qi.service.Search;
 import com.brother.qi.service.Yasuo;
 import com.sun.javafx.sg.prism.NGShape.Mode;
@@ -67,30 +70,24 @@ public class PhotoController {
    
  
    ArrayList photo=new ArrayList<>();
-   @RequestMapping(value="show",method=RequestMethod.POST)
+   @RequestMapping(value="/show",method=RequestMethod.POST)
    @ResponseBody
    public ArrayList showPhoto(String path) {
-	   loadPicture.getphoto(path);
+	   System.out.println(path);
+	   photo=loadPicture.getphoto(path);
 	   return photo;
    }
-   
-   
    
 	@RequestMapping(value="/she")
 	public String  photoshe(HttpServletRequest request,Model model) {
 		String year=request.getParameter("year");
-		logger.info("!!!!!!!!!!!!!!!!!!!!!!!");
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!S");
-        if(year==null||year.equals("0"))
-		photo=loadPicture.getphoto("/she");
-        else {
-        	String mon=request.getParameter("mon");
-        	photo=loadPicture.getphoto("/she/"+year+"/"+mon);
-        }
-        String page=request.getParameter("page");
-        if(page!=null)
-        	model.addAttribute("page",page);
-		model.addAttribute("photoname",photo);
+		String mon=request.getParameter("mon");
+		String photo_path=null;
+		if(year!=null&&mon!=null)
+			photo_path="she/"+year+"/"+mon;
+		else
+			photo_path="she";
+		model.addAttribute("photo_path", photo_path);
 		model.addAttribute("path","she");
 		return "show";
 	}
@@ -99,37 +96,22 @@ public class PhotoController {
 	@RequestMapping(value="/we")
 	public String  photowe(HttpServletRequest request,Model model) {
 		String year=request.getParameter("year");
-		logger.info("!!!!!!!!!!!!!!!!!!!!!!!");
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!S");
-        if(year==null||year.equals("0"))
-		photo=loadPicture.getphoto("/we");
-        else {
-        	String mon=request.getParameter("mon");
-        	photo=loadPicture.getphoto("/we/"+year+"/"+mon);
-        }
-        String page=request.getParameter("page");
-        if(page!=null)
-        	model.addAttribute("page",page);
-		model.addAttribute("photoname",photo);
+		String mon=request.getParameter("mon");
+		String photo_path=null;
+		if(year!=null&&mon!=null)
+			photo_path="we/"+year+"/"+mon;
+		else
+			photo_path="we";
+		model.addAttribute("photo_path", photo_path);
 		model.addAttribute("path","we");
 		return "show";
 	}
 	
 	@RequestMapping(value="/works")
 	public String  photoworks(HttpServletRequest request,Model model) {
-		String year=request.getParameter("year");
-		logger.info("!!!!!!!!!!!!!!!!!!!!!!!");
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!S");
-        if(year==null||year.equals("0"))
-		photo=loadPicture.getphoto("/works");
-        else {
-        	String mon=request.getParameter("mon");
-        	photo=loadPicture.getphoto("/works/"+year+"/"+mon);
-        }
-        String page=request.getParameter("page");
-        if(page!=null)
-        	model.addAttribute("page",page);
-		model.addAttribute("photoname",photo);
+	
+		String 	photo_path="works";
+		model.addAttribute("photo_path", photo_path);
 		model.addAttribute("path","works");
 		return "show";
 	}
@@ -143,7 +125,7 @@ public class PhotoController {
 	
 	
 	@RequestMapping(value="/picture_info")
-	public String picture_info(HttpServletRequest request, Model model) {
+	public String picture_info(HttpServletRequest request, Model model) { 
 		String picture_path=request.getParameter("picture_path");
 		model.addAttribute("picture_path",picture_path);
 		return "picture_info";
@@ -194,7 +176,8 @@ public class PhotoController {
 	
 	String root="F:\\";
 	@RequestMapping(value="/selectphoto")
-	public String  selectphoto  (@RequestParam("files") MultipartFile[] files,HttpServletRequest request,Model model, RedirectAttributes redirectAttributes) throws IllegalStateException, IOException{
+	@ResponseBody
+	public String  selectphoto  (@RequestParam("files") MultipartFile[] files,HttpServletRequest request) throws IllegalStateException, IOException{
 		String  year=request.getParameter("year");
 		String mon=request.getParameter("mon");
 		String type=request.getParameter("type");
@@ -211,7 +194,11 @@ public class PhotoController {
             for(int i = 0;i<files.length;i++){  
                 MultipartFile file = files[i];  
                 String uuid = UUID.randomUUID().toString().replaceAll("-",""); 
-                String path="picture/"+type+"/"+year+"/"+mon+"/"+uuid+".jpg";
+                String path;
+                if(type.equals("works"))
+        			path="picture/"+type+"/"+uuid+".jpg";
+        		else
+                    path="picture/"+type+"/"+year+"/"+mon+"/"+uuid+".jpg";
                 
                     //获取存取路径
                     String filePath =root+path;  
@@ -232,14 +219,14 @@ public class PhotoController {
 		}
 		Yasuo c=new Yasuo();
 		c.compress(selectphoto.toArray());
-		model.addAttribute("photoname",selectphoto);
+		//model.addAttribute("photoname",selectphoto);
 		}catch (Exception e) {
 			// TODO: handle exception
-			return "recent";
+			
 		}
-		return "you_upload";
+		 return "success";
 	}
-
+   
 	@RequestMapping(value="/upload")
 	public String addphoto(HttpServletRequest request,Model model) {
 		return "addphoto";
@@ -266,18 +253,53 @@ public class PhotoController {
 	}
 	
 	@RequestMapping(value="/recent")
-	public String recent(Model model) {
-		List<History> photo=(List<History>) h.search("from History");
-		ArrayList<String > photoname=new ArrayList<>();
-		 for(History h:photo)
-			 photoname.add(h.getphotoname());
-		     model.addAttribute("photoname",photoname);
-		return "show";
+	public String recent() {
+		return "history";
 	}
 	
 	
+	   @RequestMapping(value="/gethistory",method=RequestMethod.POST)
+      @ResponseBody
+      public ArrayList history() {
+		   List<History> photo=(List<History>) h.search("from History");
+			ArrayList<String> photoname=new ArrayList<>();
+			 for(History h:photo)
+				 photoname.add(h.getphotoname());
+		   return photoname;
+	   }
 	
-	
+	  @RequestMapping(value="/delete_des",method=RequestMethod.POST)
+	  @ResponseBody
+	  public String  delete_des(String path,String des) {
+		  Load_tag load=new Load_tag(path);
+		  Photo_info photo=load.load();
+		  String info=photo.getdescription();
+          
+		  if(des!=null) {
+			des=des.replaceAll("\n","");
+		  } 
+		  String tags[]=info.split("&");
+		  if(tags.length!=1)
+		  for(int i=0;i<tags.length;i++)
+		  
+			  if(des.equals(tags[i])) {
+				  if(i==tags.length-1)
+					     des="&"+des;
+				  else
+					     des=des+"&"; 
+
+				  break;
+			  }
+			 
+		  
+		  //System.out.println(des);
+		  //System.out.println(info.indexOf(des));
+		  String after=info.replaceAll(des,""); 
+		  System.out.println(after);  
+		  photo.setdescription(after);  
+           p.update_info(photo);
+		  return "success";  
+	  }
 	
 	
 	
